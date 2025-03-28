@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Custom CSS (Copy from your main HTML file or link to external CSS) -->
+    <style>
+        :root {
+            --primary-color: #6c63ff; /* Vibrant Purple */
+            --secondary-color: #f0f2f5;
+            --accent-color: #ff4081; /* Hot Pink */
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --info-color: #03a9f4;
+            --body-text-color: #333;
+            --light-text-color: #777;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            font-family: 'Arial', sans-serif;
+            color: var(--body-text-color);
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-color) !important;
+        }
+
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar-table th, .calendar-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .calendar-table th {
+            background-color: #f2f2f2;
+        }
+
+        .day-number {
+            cursor: pointer;
+            padding: 5px;
+            display: block;
+            transition: background-color 0.2s;
+        }
+
+        .day-number:hover {
+            background-color: #e9ecef;
+        }
+        .sidebar {
+            background-color: #fff;
+            border-right: 1px solid #e3e6f0;
+            height: 100vh;
+            box-shadow: var(--box-shadow);
+        }
+
+        .sidebar-link {
+            color: var(--light-text-color);
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+            background-color: rgba(108, 99, 255, 0.05); /* Light Purple */
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar (Copy from your main HTML file - adjust 'active' class) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">EventMaster</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="EM.html"><i class="bi bi-house-door me-1"></i>Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="calendar.html"><i class="bi bi-calendar me-1"></i>Calendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="report.html"><i class="bi bi-bar-chart me-1"></i>Reports</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search events..." aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
+                <div class="ms-3">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEventModal"><i class="bi bi-plus-circle me-1"></i>Add Event</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 sidebar p-0 d-none d-lg-block">
+                <div class="list-group list-group-flush mt-4">
+                    <a href="EM.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    </a>
+                    <a href="events.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-calendar-event me-2"></i> My Events
+                    </a>
+                    <a href="attendees.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-people me-2"></i> Attendees
+                    </a>
+                    <a href="tickets.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-ticket-perforated me-2"></i> Tickets
+                    </a>
+                    <a href="analytics.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-graph-up me-2"></i> Analytics
+                    </a>
+                    <a href="setting.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-gear me-2"></i> Settings
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-10 main-content">
+                <div class="container mt-4">
+                    <h1>Calendar</h1>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h2>October 2024</h2>  <!-- Dynamic Month Display -->
+                            <table class="calendar-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sun</th>
+                                        <th>Mon</th>
+                                        <th>Tue</th>
+                                        <th>Wed</th>
+                                        <th>Thu</th>
+                                        <th>Fri</th>
+                                        <th>Sat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>7</td>
+                                        <td>8</td>
+                                        <td>9</td>
+                                        <td>10</td>
+                                        <td>11</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>14</td>
+                                        <td>15</td>
+                                        <td>16</td>
+                                        <td>17</td>
+                                        <td>18</td>
+                                        <td>19</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>21</td>
+                                        <td>22</td>
+                                        <td>23</td>
+                                        <td>24</td>
+                                        <td>25</td>
+                                        <td>26</td>
+                                    </tr>
+                                    <tr>
+                                        <td>27</td>
+                                        <td>28</td>
+                                        <td>29</td>
+                                        <td>30</td>
+                                        <td>31</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-4">
+                            <h2>Events for Today</h2>  <!-- Dynamic: Selected Date -->
+                            <ul id="eventList">
+                                <li>No events today.</li> <!-- Dynamic: List of Events -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Your custom JS here (for setting active state etc.) -->
+    <script>
+        // Set 'active' class for current page
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            const currentPage = window.location.pathname.split('/').pop();
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+             // Basic event handling (needs much improvement)
+            const dayNumbers = document.querySelectorAll('.day-number');
+
+            dayNumbers.forEach(day => {
+                day.addEventListener('click', function() {
+                    const selectedDate = this.textContent; // Get selected day number
+                    //  Here you would fetch events for the selected date
+                    //  and update the eventList (needs AJAX/data)
+                    alert('Selected day: ' + selectedDate); // Placeholder
+                });
+            });
+        });
+    </script>
+</body>
+</html>

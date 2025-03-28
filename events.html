@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Events</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Custom CSS (Copy from your main HTML file or link to external CSS) -->
+    <style>
+         :root {
+            --primary-color: #6c63ff; /* Vibrant Purple */
+            --secondary-color: #f0f2f5;
+            --accent-color: #ff4081; /* Hot Pink */
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --info-color: #03a9f4;
+            --body-text-color: #333;
+            --light-text-color: #777;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            font-family: 'Arial', sans-serif;
+            color: var(--body-text-color);
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-color) !important;
+        }
+          .sidebar {
+            background-color: #fff;
+            border-right: 1px solid #e3e6f0;
+            height: 100vh;
+            box-shadow: var(--box-shadow);
+        }
+
+        .sidebar-link {
+            color: var(--light-text-color);
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+            background-color: rgba(108, 99, 255, 0.05); /* Light Purple */
+            text-decoration: none;
+        }
+
+         .event-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+            border: none;
+            box-shadow: var(--box-shadow);
+            background-color: #fff;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-banner {
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+        }
+
+        .event-date {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar (Copy from your main HTML file - adjust 'active' class) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">EventMaster</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="EM.html"><i class="bi bi-house-door me-1"></i>Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="calender.html"><i class="bi bi-calendar me-1"></i>Calendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="report.html"><i class="bi bi-bar-chart me-1"></i>Reports</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link active" href="events.html"><i class="bi bi-calendar-event me-1"></i>My Events</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search events..." aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
+                <div class="ms-3">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEventModal"><i class="bi bi-plus-circle me-1"></i>Add Event</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+     <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 sidebar p-0 d-none d-lg-block">
+                <div class="list-group list-group-flush mt-4">
+                    <a href="EM.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    </a>
+                    <a href="events.html" class="list-group-item list-group-item-action sidebar-link active">
+                        <i class="bi bi-calendar-event me-2"></i> My Events
+                    </a>
+                    <a href="attendees.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-people me-2"></i> Attendees
+                    </a>
+                    <a href="tickets.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-ticket-perforated me-2"></i> Tickets
+                    </a>
+                    <a href="analytics.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-graph-up me-2"></i> Analytics
+                    </a>
+                    <a href="setting.html" class="list-group-item list-group-item-action sidebar-link">
+                        <i class="bi bi-gear me-2"></i> Settings
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+             <div class="col-lg-10 main-content">
+                <div class="container mt-4">
+                    <h1>My Events</h1>
+
+                    <!-- Filter Options -->
+                    <div class="mb-3">
+                        <label for="eventFilter" class="form-label">Filter by Category:</label>
+                        <select class="form-select" id="eventFilter">
+                            <option value="">All Categories</option>
+                            <option value="Conference">Conference</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Seminar">Seminar</option>
+                            <option value="Party">Party</option>
+                             <option value="Meeting">Meeting</option>
+                        </select>
+                    </div>
+
+                    <!-- Event List -->
+                    <div class="row" id="eventList">
+                        <!-- Events will be dynamically added here -->
+                    </div>
+                     <!-- Add Event Button -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">
+                         <i class="bi bi-plus-circle me-1"></i>Add New Event
+                    </button>
+
+                </div>
+             </div>
+        </div>
+     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set 'active' class for current page
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            const currentPage = window.location.pathname.split('/').pop();
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Sample event data (replace with your actual data source)
+            const events = [
+                { id: 1, title: "Tech Conference", category: "Conference", date: "2024-11-15", description: "Annual tech conference." , image: "https://picsum.photos/id/16/400/200"},
+                { id: 2, title: "Web Dev Workshop", category: "Workshop", date: "2024-12-01", description: "Learn web development." , image: "https://picsum.photos/id/17/400/200"},
+                { id: 3, title: "Marketing Seminar", category: "Seminar", date: "2024-12-10", description: "Marketing strategies." , image: "https://picsum.photos/id/18/400/200"},
+                { id: 4, title: "Holiday Party", category: "Party", date: "2024-12-22", description: "Celebrate the holidays!" , image: "https://picsum.photos/id/19/400/200"}
+            ];
+
+            // Function to display events
+            function displayEvents(eventsArray) {
+                const eventList = document.getElementById('eventList');
+                eventList.innerHTML = ''; // Clear existing events
+
+                if (eventsArray.length === 0) {
+                    eventList.innerHTML = '<p>No events found.</p>';
+                    return;
+                }
+
+                eventsArray.forEach(event => {
+                     const eventCard = document.createElement('div');
+                    eventCard.className = 'col-md-6 col-lg-4 mb-4';
+                     eventCard.innerHTML = `
+                    <div class="card event-card shadow h-100">
+                        <div class="position-relative">
+                            <img src="${event.image}" class="card-img-top event-banner" alt="${event.title}">
+                            <span class="badge bg-${getCategoryColor(event.category)} category-badge">${event.category}</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">${event.title}</h5>
+                            <p class="card-text event-date">${formatDate(event.date)}</p>
+                            <p class="card-text text-truncate">${event.description}</p>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button class="btn btn-outline-primary btn-sm edit-event" data-id="${event.id}">Edit</button>
+                                <button class="btn btn-outline-danger btn-sm delete-event" data-id="${event.id}">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    eventList.appendChild(eventCard);
+
+                });
+            }
+
+              function formatDate(dateString) {
+                const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('en-US', options);
+             }
+
+              function getCategoryColor(category) {
+                const colors = {
+                    'Conference': 'primary',
+                    'Workshop': 'success',
+                    'Seminar': 'info',
+                    'Party': 'danger',
+                     'Meeting': 'warning'
+                };
+                return colors[category] || 'secondary';
+            }
+
+            // Initial display
+            displayEvents(events);
+
+            // Filter events
+            document.getElementById('eventFilter').addEventListener('change', function() {
+                const selectedCategory = this.value;
+                let filteredEvents;
+
+                if (selectedCategory) {
+                    filteredEvents = events.filter(event => event.category === selectedCategory);
+                } else {
+                    filteredEvents = events;
+                }
+
+                displayEvents(filteredEvents);
+            });
+        });
+    </script>
+</body>
+</html>
